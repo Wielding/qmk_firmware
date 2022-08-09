@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
 
-#define RGB_DEFAULT_TIME_OUT 600
+#define RGB_DEFAULT_TIME_OUT 240
 #define RGB_FAST_MODE_TIME_OUT 3
 #define RGB_TIME_OUT_MAX 600
 #define RGB_TIME_OUT_MIN 10
@@ -49,6 +49,7 @@ enum ctrl_keycodes
     DBG_MTRX,              // DEBUG Toggle Matrix Prints
     DBG_KBD,               // DEBUG Toggle Keyboard Prints
     DBG_MOU,               // DEBUG Toggle Mouse Prints
+    ROUT_TG,               // Timeout Toggle. Toggle idle LED time out on or off
     MD_BOOT,               // Restart into bootloader after hold timeout
 };
 
