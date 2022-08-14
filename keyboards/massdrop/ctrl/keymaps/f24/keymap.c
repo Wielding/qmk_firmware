@@ -5,7 +5,10 @@ static uint16_t idle_timer;         // Idle LED timeout timer
 static uint8_t idle_second_counter; // Idle LED seconds counter, counts seconds not milliseconds
 static uint8_t key_event_counter;   // This counter is used to check if any keys are being held
 
-
+static const char * sendstring_commands[] = {
+    "RGB TIMEOUT ON ",
+    "RGB TIMOUT OFF "
+};
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -25,8 +28,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
 
     [2] = LAYOUT(
-        _______, KC_F13, KC_F14, KC_F15, KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, KC_F21, KC_F22, KC_F23, KC_F24,                      _______, _______, _______,
-        ROUT_TG, LCAS_1, LCAS_2, LCAS_3, LCAS_4, LCAS_5, LCAS_6, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        DBG_PRNT, KC_F13, KC_F14, KC_F15, KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, KC_F21, KC_F22, KC_F23, KC_F24,                      _______, _______, _______,
+        ROUT_TG, LCAS_1, LCAS_2, LCAS_3, LCAS_4, LCAS_5, LCAS_6, LCAS_7, LCAS_8, LCAS_9, _______, _______, _______, _______, _______, _______, _______,
         WIN_PK , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                            _______,
@@ -55,8 +58,8 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                              _______,
         _______, _______, _______,                   _______,                            _______, _______, _______, _______,            _______, _______, _______
     }, [2] = {
-        _______, ACTIVE,  ACTIVE,  ACTIVE,  ACTIVE,  ACTIVE,   ACTIVE,   ACTIVE, ACTIVE, ACTIVE,   ACTIVE, ACTIVE,  ACTIVE,           _______,    _______,   _______,
-        ACTIVE,  ACTIVE, ACTIVE,    ACTIVE,    ACTIVE,    ACTIVE,    ACTIVE, _______, _______, _______,   _______,   _______,   _______,   _______, _______,    _______,   _______,
+        ACTIVE,  ACTIVE,  ACTIVE,  ACTIVE,  ACTIVE,  ACTIVE,   ACTIVE,   ACTIVE, ACTIVE, ACTIVE,   ACTIVE, ACTIVE,  ACTIVE,           _______,    _______,   _______,
+        ACTIVE,  ACTIVE, ACTIVE,    ACTIVE,    ACTIVE,    ACTIVE,    ACTIVE, ACTIVE, ACTIVE, ACTIVE,   _______,   _______,   _______,   _______, _______,    _______,   _______,
         _______, _______,  _______,  _______,  _______,  _______,  _______, _______,   _______,   _______, _______, _______, _______, _______, _______,    _______,   _______,
         _______, _______,  _______,  _______,  _______,  _______,  _______, _______, _______, _______, _______, _______, _______,
         _______, _______,  _______, _______,   _______, _______,   _______,   _______, _______, _______, _______, _______,                              _______,
@@ -153,11 +156,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         unregister_code(KC_TAB);
         unregister_code(KC_LGUI);
         return false;
+    case DBG_PRNT:
+            if (record->event.pressed)
+        {
+        if (rgb_time_out_enable) {
+            send_string(sendstring_commands[0]);
+        } else {
+            send_string(sendstring_commands[1]);
+        }}
+            return false;
     case ROUT_TG:
-                    rgb_time_out_enable = !rgb_time_out_enable;
+            if (record->event.pressed)
+        {
+                rgb_time_out_enable = !rgb_time_out_enable;
                 rgb_time_out_user_value = rgb_time_out_enable;
+        }
                 return false;
-    case LCAS_1 ... LCAS_6:
+    case LCAS_1 ... LCAS_9:
     {
         char cas[] = "1";
         cas[0] += (keycode - LCAS_1);
