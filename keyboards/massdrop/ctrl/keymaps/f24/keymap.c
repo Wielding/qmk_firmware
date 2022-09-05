@@ -203,7 +203,7 @@ void matrix_init_user(void)
     idle_second_counter = 0;                          // Counter for number of seconds keyboard has been idle.
     key_event_counter = 0;                            // Counter to determine if keys are being held, neutral at 0.
     rgb_time_out_seconds = RGB_DEFAULT_TIME_OUT;      // RGB timeout initialized to its default configure in keymap.h
-    rgb_time_out_enable = false;                       // Disable RGB timeout by default. Enable using toggle key.
+    rgb_time_out_enable = true;                       // Disable RGB timeout by default. Enable using toggle key.
     rgb_time_out_user_value = false;                  // Has to have the same initial value as rgb_time_out_enable.
     rgb_enabled_flag = true;                          // Initially, keyboard RGB is enabled. Change to false config.h initializes RGB disabled.
     rgb_time_out_fast_mode_enabled = false;           // RGB timeout fast mode disabled initially.
