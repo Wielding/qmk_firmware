@@ -31,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         DBG_PRNT, KC_F13, KC_F14, KC_F15, KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, KC_F21, KC_F22, KC_F23, KC_F24,                      _______, _______, _______,
         ROUT_TG, LCAS_1, LCAS_2, LCAS_3, LCAS_4, LCAS_5, LCAS_6, LCAS_7, LCAS_8, LCAS_9, _______, _______, _______, _______, _______, _______, _______,
         WIN_PK , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, WCS_H, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                            _______,
         _______, _______, _______, _______, _______, _______, _______, _______,                                                       _______, _______, _______),
 
@@ -186,6 +186,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         unregister_code(KC_LSHIFT);
     }
 
+        return false;
+
+        case WCS_H:
+        register_code(KC_LSHIFT);
+        register_code(KC_LCTRL);
+        register_code(KC_LEFT_GUI);
+        register_code(KC_H);
+        unregister_code(KC_H);
+        unregister_code(KC_LEFT_GUI);
+        unregister_code(KC_LCTRL);
+        unregister_code(KC_LSHIFT);
         return false;
     default:
         return true; // Process all other keycodes normally

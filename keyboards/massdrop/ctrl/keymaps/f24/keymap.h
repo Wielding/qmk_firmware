@@ -67,5 +67,12 @@ enum string_macro_keycodes {
     LCAS_6,
     LCAS_7,
     LCAS_8,
-    LCAS_9
+    LCAS_9,
+    WCS_H,
+    LS_POS, // Left Size Position
+    RS_POS,
+    TL_POS,
+    TR_POS,
+    BL_POS,
+    BR_POS
 };
